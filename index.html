@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ABC Pharmacy – Your Trusted Health Partner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <!-- Logo -->
+    <a href="index.html" class="logo">
+      <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="19" cy="19" r="19" fill="#00a651"/>
+        <rect x="16" y="8" width="6" height="22" rx="3" fill="white"/>
+        <rect x="8" y="16" width="22" height="6" rx="3" fill="white"/>
+      </svg>
+      <span class="logo-text">ABC Pharmacy</span>
+    </a>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="searchInput" class="search-input" placeholder="Search medicines, vitamins, skincare…"/>
+    </div>
+
+    <!-- Right actions -->
+    <div class="header-actions">
+      <button class="hdr-btn pincode-btn" id="pinBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span id="pinDisplay">Pincode</span>
+      </button>
+      <button class="hdr-icon-btn" title="Notifications">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <button class="hdr-icon-btn" title="Account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <button class="hdr-icon-btn cart-btn" id="cartBtn" title="Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="cat-tabs-wrap">
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" data-cat="all">All</button>
+      <button class="cat-tab" data-cat="Medicines">Medicines</button>
+      <button class="cat-tab" data-cat="Vitamins">Vitamins</button>
+      <button class="cat-tab" data-cat="Skincare">Skincare</button>
+      <button class="cat-tab" data-cat="Baby Care">Baby Care</button>
+      <button class="cat-tab" data-cat="Devices">Devices</button>
+      <button class="cat-tab" data-cat="Ayurvedic">Ayurvedic</button>
+      <button class="cat-tab" data-cat="Personal Care">Personal Care</button>
+    </div>
+  </div>
+</header>
+
+<!-- PINCODE MODAL -->
+<div class="modal-overlay" id="pinModal">
+  <div class="pin-modal-box">
+    <button class="modal-close" id="pinModalClose">&times;</button>
+    <h3>Enter Delivery Pincode</h3>
+    <p>Get accurate delivery timelines</p>
+    <div class="pin-input-row">
+      <input type="text" id="pinInput" maxlength="6" placeholder="Enter 6-digit pincode" class="pin-input"/>
+      <button class="btn-primary" id="applyPin">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>My Cart</h3>
+    <button class="drawer-close" id="cartClose">&times;</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty" id="cartEmpty">
+      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <p>Your cart is empty</p>
+      <span>Add products to get started</span>
+    </div>
+    <div id="cartItemsList"></div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <span id="cartSubtotal">₹0</span>
+    </div>
+    <div class="cart-delivery-note">Free delivery on orders above ₹499</div>
+    <button class="btn-primary btn-full">Proceed to Checkout</button>
+  </div>
+</div>
+
+<!-- QUICK VIEW MODAL -->
+<div class="modal-overlay" id="quickViewModal">
+  <div class="quick-view-box">
+    <button class="modal-close" id="qvClose">&times;</button>
+    <div class="qv-inner" id="qvInner"></div>
+  </div>
+</div>
+
+<!-- HERO CAROUSEL -->
+<section class="hero-carousel" id="heroCarousel">
+  <div class="carousel-track" id="carouselTrack">
+
+    <!-- Slide 1 -->
+    <div class="slide slide-1">
+      <div class="slide-content">
+        <div class="slide-badge">Limited Time Offer</div>
+        <h1 class="slide-title">Up to <span class="highlight">30% Off</span> on Prescription Medicines</h1>
+        <p class="slide-sub">Genuine medicines, verified pharmacists, doorstep delivery.</p>
+        <a href="#products" class="btn-hero">Shop Now</a>
+      </div>
+      <div class="slide-img-wrap">
+        <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80" alt="Medicines" class="slide-img"/>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide slide-2">
+      <div class="slide-content">
+        <div class="slide-badge">Express Service</div>
+        <h1 class="slide-title">Free <span class="highlight-orange">2-Hour</span> Home Delivery</h1>
+        <p class="slide-sub">Order before 8 PM and get it delivered the same day.</p>
+        <a href="#products" class="btn-hero">Order Now</a>
+      </div>
+      <div class="slide-img-wrap">
+        <img src="https://images.unsplash.com/photo-1563213126-a4273aed2016?w=800&q=80" alt="Delivery" class="slide-img"/>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide slide-3">
+      <div class="slide-content">
+        <div class="slide-badge">Online Consultation</div>
+        <h1 class="slide-title">Consult a Doctor Online — <span class="highlight-blue">₹99</span></h1>
+        <p class="slide-sub">Experienced doctors available 24/7. Book your slot now.</p>
+        <a href="#products" class="btn-hero">Book Now</a>
+      </div>
+      <div class="slide-img-wrap">
+        <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80" alt="Doctor" class="slide-img"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arrow buttons -->
+  <button class="carousel-arrow left" id="prevSlide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="carousel-arrow right" id="nextSlide">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+
+  <!-- Dots -->
+  <div class="carousel-dots" id="carouselDots">
+    <button class="dot active" data-slide="0"></button>
+    <button class="dot" data-slide="1"></button>
+    <button class="dot" data-slide="2"></button>
+  </div>
+</section>
+
+<!-- HEALTH CONCERN ICONS -->
+<section class="health-concerns">
+  <div class="container">
+    <h2 class="section-title">Shop by <span class="green">Health Concern</span></h2>
+    <div class="concerns-grid">
+      <div class="concern-card" data-cat="Medicines">
+        <div class="concern-icon">🩸</div>
+        <span>Diabetes</span>
+      </div>
+      <div class="concern-card" data-cat="Medicines">
+        <div class="concern-icon">❤️</div>
+        <span>Heart Health</span>
+      </div>
+      <div class="concern-card" data-cat="Medicines">
+        <div class="concern-icon">🤧</div>
+        <span>Cold &amp; Flu</span>
+      </div>
+      <div class="concern-card" data-cat="Medicines">
+        <div class="concern-icon">🌿</div>
+        <span>Allergies</span>
+      </div>
+      <div class="concern-card" data-cat="Medicines">
+        <div class="concern-icon">🫁</div>
+        <span>Digestive</span>
+      </div>
+      <div class="concern-card" data-cat="Vitamins">
+        <div class="concern-icon">👩</div>
+        <span>Women's Health</span>
+      </div>
+      <div class="concern-card" data-cat="Medicines">
+        <div class="concern-icon">💊</div>
+        <span>Pain Relief</span>
+      </div>
+      <div class="concern-card" data-cat="Vitamins">
+        <div class="concern-icon">🛡️</div>
+        <span>Immunity</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS SECTION -->
+<section class="products-section" id="products">
+  <div class="container">
+    <div class="products-header">
+      <h2 class="section-title">Top <span class="green">Selling</span> Products</h2>
+      <div class="product-filter-tabs" id="productFilterTabs">
+        <button class="pf-tab active" data-pf="all">All</button>
+        <button class="pf-tab" data-pf="Medicines">Medicines</button>
+        <button class="pf-tab" data-pf="Vitamins">Vitamins</button>
+        <button class="pf-tab" data-pf="Skincare">Skincare</button>
+        <button class="pf-tab" data-pf="Baby Care">Baby Care</button>
+        <button class="pf-tab" data-pf="Devices">Devices</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+      <!-- populated by script.js -->
+    </div>
+
+    <div class="no-results" id="noResults" style="display:none">
+      <p>No products found. Try a different search or category.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRESCRIPTION UPLOAD -->
+<section class="rx-section">
+  <div class="rx-inner">
+    <div class="rx-text">
+      <div class="rx-icon-big">📋</div>
+      <h2>Upload Prescription &amp; Get Medicines Delivered</h2>
+      <p>Our pharmacist verifies within <strong>30 minutes</strong> — genuine medicines guaranteed.</p>
+      <ul class="rx-features">
+        <li>✅ CDSCO certified pharmacists</li>
+        <li>✅ Secure &amp; confidential</li>
+        <li>✅ Accepts photos &amp; PDF</li>
+      </ul>
+    </div>
+    <div class="rx-upload-area" id="rxDropArea">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <p id="rxDropLabel">Drag &amp; drop your prescription here</p>
+      <span>or</span>
+      <label class="btn-hero rx-btn" for="rxFileInput">
+        Upload Now
+        <input type="file" id="rxFileInput" accept=".jpg,.jpeg,.png,.pdf" style="display:none"/>
+      </label>
+      <p class="rx-formats">Supported: JPG, PNG, PDF (max 10MB)</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED OFFERS -->
+<section class="offers-section">
+  <div class="container">
+    <h2 class="section-title">Featured <span class="green">Offers</span></h2>
+    <div class="offers-grid">
+      <div class="offer-card offer-green">
+        <div class="offer-text">
+          <span class="offer-tag">Best Deal</span>
+          <h3>Lab Tests at Home</h3>
+          <p>Book 200+ tests online. Reports in 24 hours.</p>
+          <button class="btn-dark">Book Now</button>
+        </div>
+        <div class="offer-icon">🧪</div>
+      </div>
+      <div class="offer-card offer-blue">
+        <div class="offer-text">
+          <span class="offer-tag">Health Pack</span>
+          <h3>Diabetes Care Pack</h3>
+          <p>Glucometer + strips + medicines — save up to ₹800.</p>
+          <button class="btn-dark">Shop Now</button>
+        </div>
+        <div class="offer-icon">🩸</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HEALTH BLOG -->
+<section class="blog-section">
+  <div class="container">
+    <h2 class="section-title">Health <span class="green">Blog</span></h2>
+    <div class="blog-grid">
+      <article class="blog-card">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=400&q=80" alt="Diabetes"/>
+          <span class="blog-cat-tag">Diabetes</span>
+        </div>
+        <div class="blog-body">
+          <span class="blog-date">Dec 12, 2024</span>
+          <h3>5 Ways to Manage Diabetes Naturally</h3>
+          <p>Discover evidence-based lifestyle changes that can help stabilise blood sugar without over-reliance on medications.</p>
+          <a href="#" class="blog-read-more">Read More →</a>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=80" alt="Immunity"/>
+          <span class="blog-cat-tag">Immunity</span>
+        </div>
+        <div class="blog-body">
+          <span class="blog-date">Nov 28, 2024</span>
+          <h3>Top Immunity Boosters for 2024</h3>
+          <p>From Vitamin C to Ashwagandha — we break down the supplements actually worth adding to your daily routine.</p>
+          <a href="#" class="blog-read-more">Read More →</a>
+        </div>
+      </article>
+      <article class="blog-card">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&q=80" alt="Blood Pressure"/>
+          <span class="blog-cat-tag">Cardiology</span>
+        </div>
+        <div class="blog-body">
+          <span class="blog-date">Nov 14, 2024</span>
+          <h3>Understanding Blood Pressure: A Guide</h3>
+          <p>What the numbers mean, when to worry, and simple steps to keep your blood pressure in a healthy range.</p>
+          <a href="#" class="blog-read-more">Read More →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<section class="trust-strip">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <span class="trust-icon">✅</span>
+        <div>
+          <strong>100% Genuine</strong>
+          <span>All medicines certified</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🚚</span>
+        <div>
+          <strong>2-Hr Delivery</strong>
+          <span>Express doorstep service</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">💊</span>
+        <div>
+          <strong>25,000+ Products</strong>
+          <span>Largest pharmacy range</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">📞</span>
+        <div>
+          <strong>24/7 Support</strong>
+          <span>Always here for you</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-logo">
+          <svg width="32" height="32" viewBox="0 0 38 38" fill="none"><circle cx="19" cy="19" r="19" fill="#00a651"/><rect x="16" y="8" width="6" height="22" rx="3" fill="white"/><rect x="8" y="16" width="22" height="6" rx="3" fill="white"/></svg>
+          <span>ABC Pharmacy</span>
+        </div>
+        <p class="footer-about">Your trusted health partner since 2015. Delivering genuine medicines and healthcare products across India.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link" title="Facebook">f</a>
+          <a href="#" class="social-link" title="Instagram">in</a>
+          <a href="#" class="social-link" title="Twitter">𝕏</a>
+          <a href="#" class="social-link" title="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Upload Prescription</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Offers</a></li>
+          <li><a href="#">Lab Tests</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="#">Medicines</a></li>
+          <li><a href="#">Vitamins &amp; Supplements</a></li>
+          <li><a href="#">Skincare</a></li>
+          <li><a href="#">Baby Care</a></li>
+          <li><a href="#">Medical Devices</a></li>
+          <li><a href="#">Ayurvedic</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <ul class="contact-list">
+          <li>📍 123 Health Street, Mumbai, MH 400001</li>
+          <li>📞 <a href="tel:18001234567">1800-123-4567</a> (Toll Free)</li>
+          <li>✉️ <a href="mailto:support@abcpharmacy.in">support@abcpharmacy.in</a></li>
+          <li>⏰ Mon–Sat: 8 AM – 10 PM</li>
+          <li>⏰ Sun: 9 AM – 6 PM</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-mid">
+      <div class="payment-label">We Accept:</div>
+      <div class="payment-icons">
+        <span class="pay-icon">VISA</span>
+        <span class="pay-icon">MC</span>
+        <span class="pay-icon">UPI</span>
+        <span class="pay-icon">COD</span>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 ABC Pharmacy. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Return Policy</a>
+        <a href="admin.html" class="admin-link">Admin Panel →</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
